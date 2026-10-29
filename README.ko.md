@@ -18,7 +18,7 @@ Apple Silicon Mac과 Xcode Command Line Tools(소스 빌드용)가 필요합니�
 
 ```bash
 brew tap kimjj81/screendim https://github.com/kimjj81/screendim
-brew install --HEAD screendim
+brew install screendim
 screendim install
 ```
 
@@ -27,7 +27,7 @@ screendim install
 업데이트:
 
 ```bash
-brew upgrade --fetch-HEAD screendim
+brew update && brew upgrade screendim
 ```
 
 실행 중인 에이전트는 다음 로그인 때까지 이전 바이너리를 씁니다. 바로 새 버전을 쓰려면 `screendim install`을 다시 실행하세요.

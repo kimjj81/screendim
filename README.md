@@ -18,7 +18,7 @@ Requires an Apple Silicon Mac and Xcode Command Line Tools (to build from source
 
 ```bash
 brew tap kimjj81/screendim https://github.com/kimjj81/screendim
-brew install --HEAD screendim
+brew install screendim
 screendim install
 ```
 
@@ -27,7 +27,7 @@ screendim install
 To update:
 
 ```bash
-brew upgrade --fetch-HEAD screendim
+brew update && brew upgrade screendim
 ```
 
 The running agent keeps the old binary until the next login. To use the new one right away, run `screendim install` again.
