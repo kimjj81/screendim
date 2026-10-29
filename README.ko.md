@@ -18,6 +18,7 @@ Apple Silicon Mac과 Xcode Command Line Tools(소스 빌드용)가 필요합니�
 
 ```bash
 brew tap kimjj81/screendim https://github.com/kimjj81/screendim
+brew trust --formula kimjj81/screendim/screendim   # Homebrew 최신 버전은 외부 tap 신뢰 등록이 필요
 brew install screendim
 screendim install
 ```

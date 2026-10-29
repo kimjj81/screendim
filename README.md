@@ -18,6 +18,7 @@ Requires an Apple Silicon Mac and Xcode Command Line Tools (to build from source
 
 ```bash
 brew tap kimjj81/screendim https://github.com/kimjj81/screendim
+brew trust --formula kimjj81/screendim/screendim   # Homebrew 5+ requires trusting third-party taps
 brew install screendim
 screendim install
 ```
