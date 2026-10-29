@@ -69,3 +69,31 @@ enum Displays {
         }
     }
 }
+
+/// Software blackout via the display's gamma table. Used on DDC displays, whose backlight
+/// often stays visibly lit at DDC brightness 0. The system resets gamma when this process exits.
+enum Gamma {
+    private static var originals: [CGDirectDisplayID: (r: [CGGammaValue], g: [CGGammaValue], b: [CGGammaValue])] = [:]
+
+    static func blackout(_ d: Saved) {
+        guard let id = Displays.id(forUUID: d.uuid) else { return }
+        if originals[id] == nil {
+            let cap = CGDisplayGammaTableCapacity(id)
+            var r = [CGGammaValue](repeating: 0, count: Int(cap))
+            var g = r, b = r
+            var n: UInt32 = 0
+            if CGGetDisplayTransferByTable(id, cap, &r, &g, &b, &n) == .success {
+                originals[id] = (Array(r.prefix(Int(n))), Array(g.prefix(Int(n))), Array(b.prefix(Int(n))))
+            }
+        }
+        let zero = [CGGammaValue](repeating: 0, count: 2)
+        CGSetDisplayTransferByTable(id, 2, zero, zero, zero)
+    }
+
+    static func restoreAll() {
+        for (id, t) in originals {
+            CGSetDisplayTransferByTable(id, UInt32(t.r.count), t.r, t.g, t.b)
+        }
+        originals.removeAll()
+    }
+}

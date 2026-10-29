@@ -76,9 +76,10 @@ brew untap kimjj81/screendim
 ## How it works
 
 - On dim, current brightness is saved to `~/.screendim-state.json` and every display is set to 0.
+- Many monitors stay visibly lit at DDC brightness 0, so DDC displays are also blacked out in software (gamma table). The original colors come back on restore.
 - A key press or mouse click restores it. Mouse movement and modifier keys alone don't count.
 - While the screen is locked, keys are ignored; unlocking (Touch ID or password) restores it.
-- The built-in display is pinned at 0 every 3 seconds so auto-brightness can't raise it.
+- Every 3 seconds the built-in display is pinned at 0 (against auto-brightness) and the gamma blackout is re-applied.
 - Merely touching the Touch ID sensor can't be detected: macOS doesn't expose it to apps.
 - The login item lives at `~/Library/LaunchAgents/io.github.kimjj81.screendim.plist`. macOS may show a one-time "Background item added" notification; the item appears under System Settings → General → Login Items & Extensions.
 - The agent runs as a UI element process: it never shows in the Dock, the menu bar, or ⌘-Tab.

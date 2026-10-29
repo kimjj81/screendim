@@ -71,6 +71,7 @@ final class Dimmer {
         try? JSONEncoder().encode(s).write(to: URL(fileURLWithPath: Dimmer.statePath))
         state = s
         saved.forEach { Displays.set($0, fraction: Dimmer.dimLevel) }
+        saved.filter { $0.kind == "ddc" }.forEach(Gamma.blackout)
         watch(start: Date())
         return true
     }
@@ -82,6 +83,7 @@ final class Dimmer {
         timer = nil
         if let o = unlockObserver { DistributedNotificationCenter.default().removeObserver(o) }
         unlockObserver = nil
+        Gamma.restoreAll()
         Dimmer.restore(s)
         onRestore?()
     }
@@ -104,10 +106,11 @@ final class Dimmer {
                     .min() ?? .infinity
                 if idle < elapsed - Dimmer.graceSeconds { self.restore(); return }
             }
-            // Auto-brightness on the built-in display can creep back up; pin native displays.
+            // Auto-brightness can creep back up and wake/reconfigure can reset gamma; pin both.
             if Date().timeIntervalSince(lastPin) > 3 {
                 lastPin = Date()
                 s.displays.filter { $0.kind == "native" }.forEach { Displays.set($0, fraction: Dimmer.dimLevel) }
+                s.displays.filter { $0.kind == "ddc" }.forEach(Gamma.blackout)
             }
         }
     }
