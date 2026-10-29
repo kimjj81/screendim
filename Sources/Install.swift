@@ -28,6 +28,8 @@ enum Installer {
         let invoked = invokedPath()
         let real = URL(fileURLWithPath: invoked).resolvingSymlinksInPath().path
         if let r = real.range(of: "/Cellar/screendim/") {
+            // A copy left by a source install would shadow Homebrew's binary on PATH.
+            try? FileManager.default.removeItem(atPath: localBin)
             return String(real[..<r.lowerBound]) + "/opt/screendim/bin/screendim"
         }
         if real != localBin {
