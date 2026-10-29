@@ -1,5 +1,7 @@
 # screendim
 
+**English** | [한국어](README.ko.md)
+
 Dim every connected display to 0 with one hotkey. Any key press, click, or screen unlock (Touch ID or password) restores the previous brightness.
 
 No app window, no Dock icon, no menu bar item: just a CLI and a per-user LaunchAgent.
@@ -107,31 +109,6 @@ Run `screendim restore`.
 
 - Built from source on your Mac, so no code signing or notarization is needed (the linker ad-hoc signs it, and no quarantine flag is set).
 - Uses the private frameworks DisplayServices and IOAVService. They may change in future macOS releases.
-
-## 한국어 안내
-
-단축키(기본 ⌃⌥⌘B) 하나로 모든 모니터 밝기를 0으로 내리고, 키 입력·클릭·잠금 해제(Touch ID/암호) 시 원래 밝기로 돌아옵니다. Dock·메뉴 막대 아이콘이 없고, Karabiner·m1ddc·손쉬운 사용 권한이 필요 없습니다.
-
-**설치 (Homebrew)**
-
-```bash
-brew tap kimjj81/screendim https://github.com/kimjj81/screendim
-brew install --HEAD screendim
-screendim install
-```
-
-`screendim install`을 한 번 실행하면 로그인 시 자동 실행되고 바로 단축키가 동작합니다. 단축키를 바꾸려면 `screendim install --hotkey cmd+shift+f12`처럼 다시 실행하세요.
-
-**업데이트**: `brew upgrade --fetch-HEAD screendim` 후 `screendim install`
-
-**제거**: `screendim uninstall` → `brew uninstall screendim` → `brew untap kimjj81/screendim`
-
-**자주 겪는 문제**
-- `brew install` 중 CLT 오류: Command Line Tools가 macOS보다 오래된 경우입니다. 소프트웨어 업데이트로 갱신하거나 `sudo rm -rf /Library/Developer/CommandLineTools` 후 `sudo xcode-select --install`.
-- 소스 설치본이 Homebrew 버전을 가릴 때: `$(brew --prefix)/bin/screendim install` 후 `hash -r`.
-- 화면이 어두운 채로 남으면: `screendim restore`.
-- 모니터가 안 어두워지면: `screendim status`로 확인하고, 모니터 OSD 메뉴에서 DDC/CI가 켜져 있는지 확인하세요.
-- Touch ID 센서에 손가락만 대는 동작은 macOS가 앱에 알려주지 않아 감지할 수 없습니다. Touch ID로 잠금을 해제하면 복원됩니다.
 
 ## License
 
